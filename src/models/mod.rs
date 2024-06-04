@@ -1,16 +1,8 @@
-mod common;
-mod common_rhai;
-mod worldmap;
-mod worldmap_rhai;
-mod worldobject;
-mod worldobject_rhai;
+mod object;
+mod person;
+mod world;
 
 
-
-pub use common::{
-	LevelPosition,
-	LevelIntermediateObjects
-};
-
-pub use worldobject::WorldObject;
-pub use worldmap::WorldMap;
+pub use object::Object;
+pub use person::Person;
+pub use world::World;

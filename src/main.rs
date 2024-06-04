@@ -5,7 +5,7 @@ use serde_json::{
 };
 use std::{
 	fs::File,
-	io::BufReader,
+	io::{BufReader, read_to_string,},
 	path::Path,
 };
 use rhai::{
@@ -15,30 +15,22 @@ use rhai::{
 
 mod models;
 use models::{
-	LevelPosition,
-	LevelIntermediateObjects,
-	WorldObject,
-	WorldMap,
+	World,
 };
-
-const SCRIPT: &str = r#"
-print(`${world}`);
-let obj = world.object(new_position(0, 1, 1), 10004);
-print(`${obj}`);
-
-print(`Title through attribute: "${obj.attribute("title")}"`);
-print(`Name  through prop     : "${obj.name}"`);
-"#;
 
 
 fn main() {
 
-	let file = File::open(Path::new("./level_map.json")).unwrap();
-	let reader = BufReader::new(file);
+	let file = File::open(Path::new("./world.json")).unwrap();
+	let world_reader = BufReader::new(file);
+	
+	let file = File::open(Path::new("./script.rhai")).unwrap();
+	let script_reader = read_to_string(BufReader::new(file)).unwrap();
 
 
-	let inter_objects: LevelIntermediateObjects = jfrom_reader(reader).unwrap();
-	let world = WorldMap::from(inter_objects);
+	let mut world: World = jfrom_reader(world_reader).unwrap();
+	world.init();
+
 
 	let mut scope = Scope::new();
 	scope
@@ -46,14 +38,13 @@ fn main() {
 
 	let mut engine = Engine::new();
 	engine
-		.build_type::<LevelPosition>()
-		.build_type::<WorldObject>()
-		.build_type::<WorldMap>()
-		.register_fn("new_position", |level: i32, lat: i32, lon: i32| {LevelPosition::from((level, lat, lon))})
+		.build_type::<models::Object>()
+		.build_type::<models::Person>()
+		.build_type::<World>()
+	// 	.register_fn("new_position", |level: i32, lat: i32, lon: i32| {LevelPosition::from((level, lat, lon))})
 	;
 
-	let r = engine.eval_with_scope::<()>(&mut scope, SCRIPT);
-	println!("eval: {r:?}");
-
+	let r = engine.eval_with_scope::<()>(&mut scope, &script_reader);
+	println!("eval: {r:#?}");
 
 }
