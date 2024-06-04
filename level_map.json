@@ -1,0 +1,55 @@
+{
+	"name": "Another World",
+	"classes": {
+		"myCozyPlace": {
+			"name": "",
+			"title": ""
+		},
+		"myShelter": {
+			"name": "",
+			"title": ""
+		},
+		"myRunaway": {
+			"name": "This is very strange",
+			"title": "and useless title"
+		},
+		"myPrison": {
+			"name": "",
+			"title": ""
+		}
+	},
+	"objects": [
+		{
+			"class": "myCozyPlace",
+			"id": 10001,
+			"position": {"layer": 0, "lat": 0, "lon": 10}
+		},
+		{
+			"class": "myCozyPlace",
+			"id": 10002,
+			"name": "Another place to hide",
+			"position": {"layer": 0, "lat": 10, "lon": 10}
+		},
+		{
+			"class": "myShelter",
+			"id": 10003,
+			"position": {"layer": 0, "lat": 10, "lon": 0}
+		},
+		{
+			"class": "myRunaway",
+			"id": 10004,
+			"position": {"layer": 0, "lat": 1, "lon": 1}
+		},
+		{
+			"class": "myPrison",
+			"id": 10005,
+			"position": {"layer": 0, "lat": 5, "lon": 5}
+		},
+		{
+			"class": "myPrison",
+			"id": 10006,
+			"name": "Prison on top of the other",
+			"position": {"layer": 0, "lat": 5, "lon": 5}
+		}
+	]
+}
